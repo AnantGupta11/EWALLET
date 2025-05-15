@@ -18,10 +18,10 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("/add")
-    private ResponseEntity<Users> addUser(@RequestBody @Valid UserRequestDTO dto){
+    @PostMapping("/addUpdate")
+    private ResponseEntity<Users> addUpdate(@RequestBody @Valid UserRequestDTO dto){
 
-        Users user=userService.addUser(dto);
+        Users user=userService.addUpdate(dto);
 
         if(user!=null){
             ResponseEntity response=new ResponseEntity(user,HttpStatus.OK);

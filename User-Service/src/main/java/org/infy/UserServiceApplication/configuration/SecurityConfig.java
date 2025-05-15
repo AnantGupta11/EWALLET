@@ -17,11 +17,14 @@ public class SecurityConfig {
     @Autowired
     UserService userService;
 
+    @Autowired
+    CommonConfig commonConfig;
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userService);
-        authenticationProvider.setPasswordEncoder(commonConfiguration.getEncoder());
+        authenticationProvider.setPasswordEncoder(commonConfig.getEncoder());
         return authenticationProvider;
     }
 
@@ -30,14 +33,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/user/addStudent/**").permitAll()
-                        .requestMatchers("/user/addAdmin/**").permitAll()
-                        .requestMatchers("/user/filter/**").hasAnyAuthority(adminAuthority,studentAuthority)
-                        .requestMatchers("/txn/create/**").hasAuthority(adminAuthority)
-                        .requestMatchers("/txn/return/**").hasAuthority(adminAuthority)
-                        .requestMatchers("/book/addBook/**").hasAuthority(adminAuthority)
-                        .requestMatchers("/book/filter/**").hasAnyAuthority(adminAuthority,studentAuthority)
-                        .anyRequest().authenticated()
+                        .requestMatchers("/user/addUpdate/**").permitAll()
+//                        .requestMatchers("/user/addAdmin/**").permitAll()
+//                        .requestMatchers("/user/filter/**").hasAnyAuthority(adminAuthority,studentAuthority)
+//                        .requestMatchers("/txn/create/**").hasAuthority(adminAuthority)
+//                        .requestMatchers("/txn/return/**").hasAuthority(adminAuthority)
+//                        .requestMatchers("/book/addBook/**").hasAuthority(adminAuthority)
+//                        .requestMatchers("/book/filter/**").hasAnyAuthority(adminAuthority,studentAuthority)
+                        .anyRequest().permitAll()
                 ).formLogin(withDefaults()).httpBasic(withDefaults()).csrf(csrf -> csrf.disable());
         return http.build();
     }

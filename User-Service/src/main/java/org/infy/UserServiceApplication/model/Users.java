@@ -5,8 +5,10 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +33,8 @@ public class Users implements UserDetails {
     private String authorities;
     private String password;
 
+    private UserType userType;
+
     private boolean accountNonExpired;
     private boolean enabled;
     private boolean accountNonLocked;
@@ -54,7 +58,7 @@ public class Users implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+       return Arrays.stream(authorities.split(",")).map(a-> new SimpleGrantedAuthority(a)).toList();
     }
 
     @Override
