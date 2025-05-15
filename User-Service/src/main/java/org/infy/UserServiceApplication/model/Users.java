@@ -16,6 +16,7 @@ import java.util.List;
 @ToString
 @Getter
 @Setter
+@Builder
 public class Users implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +48,8 @@ public class Users implements UserDetails {
 
     @Enumerated
     private UserIdentifier identifier;
+
+    private String userIdentifierValue;
 
 
     @Override
