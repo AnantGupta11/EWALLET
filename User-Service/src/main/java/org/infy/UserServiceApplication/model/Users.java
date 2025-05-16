@@ -14,11 +14,13 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @ToString
 @Getter
 @Setter
+@NoArgsConstructor
 @Builder
+@AllArgsConstructor
 public class Users implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +34,10 @@ public class Users implements UserDetails {
 
     private String authorities;
     private String password;
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     private UserType userType;
 
